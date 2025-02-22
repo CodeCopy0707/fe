@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bot Keep Alive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 20%;
+        }
+        .status {
+            font-size: 20px;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔄 Bot Keep Alive Status</h1>
+    <p class="status">Waiting for ping...</p>
+
+    <script>
+        const SERVER_URL = "https://imagicaaa-1.onrender.com/ping";  // Yahan apni bot ka URL daalo
+
+        async function keepAlive() {
+            try {
+                const response = await fetch(SERVER_URL);
+                if (response.ok) {
+                    document.querySelector('.status').innerText = `✅ Last Ping: ${new Date().toLocaleTimeString()}`;
+                    console.log(`✅ Ping Sent at ${new Date().toLocaleTimeString()}`);
+                } else {
+                    document.querySelector('.status').innerText = "❌ Ping Failed!";
+                    console.error("❌ Ping Failed!");
+                }
+            } catch (err) {
+                document.querySelector('.status').innerText = "❌ Server Down!";
+                console.error("❌ Server Down!", err);
+            }
+        }
+
+        // First ping immediately
+        keepAlive();
+
+        // Repeat every 30 seconds
+        setInterval(keepAlive, 30000);
+    </script>
+</body>
+</html>
